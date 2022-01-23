@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CartController!
+
+{% endblock %}
+ {% block stylesheets %}
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+ {% endblock %}
+{% block body %}
+    {{include('header/navbar.html.twig')}}
+
+    <div class="bg-light p-3">
+        <h1>Votre panier</h1>
+    </div>
+    {% if items | length >0 %}
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Prix</th>
+                <th>Quantite</th>
+                <th>Total</th>
+                <th></th>
+                <tbody>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.product.title}}</td>
+                <td>{{ item.product.price}}</td>
+                <td>{{ item.quantity}}</td>
+                <td>{{ item.product.price * item.quantity}}</td>
+                <td>
+                    <a href="{{path('cart_remove',{'id':item.product.id})  }}" class="btn btn-danger btn-sm">
+                        <i class="fas fa-trach"></i>
+                    </a>
+                </td>
+
+
+
+            </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+            <tr>
+            <td colspan="3" class="tex-right">Total:
+            </td>
+                <td>{{ total }}</td>
+            <tr>
+            </tfoot>
+
+            </tr>
+            </thead>
+        </table>
+    {% else %}
+    <p>Surprise, c'est vide !</p>
+    {% endif %}
+{% endblock %}
